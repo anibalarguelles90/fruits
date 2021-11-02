@@ -1,75 +1,106 @@
 package com.aag.spring.fruit.model;
 
-import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "fruit")
-public class Fruit {
+public class Fruit extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1749741125498296466L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private int id;
 
-	@Column(name = "clave")
-	private String clave;
+	private String code;
 
-	@Column(name = "nombre")
-	private String nombre;
+	private String name;
 
+	@OneToMany(mappedBy = "fruit", cascade = CascadeType.ALL)
+	private List<Price> prices;
+
+	/**
+	 * 
+	 */
 	public Fruit() {
-
+		super();
 	}
 
-	public Fruit(String clave, String nombre) {
-		this.clave = clave;
-		this.nombre = nombre;
+	/**
+	 * @param key
+	 * @param name
+	 */
+	public Fruit(String code, String name) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.setcDate(new Date());
+		this.setuDate(new Date());
 	}
 
 	/**
 	 * @return the id
 	 */
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return the clave
+	 * @return the key
 	 */
-	public String getClave() {
-		return clave;
+	public String getCode() {
+		return code;
 	}
 
 	/**
-	 * @param clave the clave to set
+	 * @param key the key to set
 	 */
-	public void setClave(String clave) {
-		this.clave = clave;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	/**
-	 * @return the nombre
+	 * @return the name
 	 */
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * @param nombre the nombre to set
+	 * @param name the name to set
 	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Fruit [id=" + id + ", " + (clave != null ? "clave=" + clave + ", " : "") + (nombre != null ? "nombre=" + nombre : "") + "]";
+	/**
+	 * @return the prices
+	 */
+	public List<Price> getPrices() {
+		return prices;
+	}
+
+	/**
+	 * @param prices the prices to set
+	 */
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
 	}
 
 }
