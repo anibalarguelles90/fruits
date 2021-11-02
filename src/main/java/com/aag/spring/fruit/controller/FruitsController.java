@@ -74,6 +74,18 @@ public class FruitsController {
 		}
 	}
 
+	@PutMapping("/fruits/{code}")
+	public ResponseEntity<Fruit> updateTutorial(@PathVariable("code") String code, @RequestBody Fruit fruitRequest) {
+		Fruit fruit = fruitRepository.findByCode(fruitRequest.getCode());
+
+		if (fruit != null) {
+			fruit.setCode(fruitRequest.getCode());
+			fruit.setName(fruitRequest.getName());
+			return new ResponseEntity<>(fruitRepository.save(fruit), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@DeleteMapping("/fruits/{id}")
 	public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
